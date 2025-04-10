@@ -61,7 +61,7 @@ public class UdpPrueba {
             System.out.println(mapper.readValue(new String(response), Persona.class));
 
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 
