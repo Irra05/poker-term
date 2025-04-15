@@ -1,6 +1,6 @@
-package com.expertos.poker.imports;
+package com.expertos.poker.model;
 
-import com.expertos.common.Carta;
+import com.expertos.common.model.Carta;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,6 +26,11 @@ public class CartaPoker extends Carta {
             case 1: return 13;
             default: return num - 1;
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.getNumRight() + " " + super.getPaloRight();
     }
 
     public static List<CartaPoker> readFromFile(String fileName) {

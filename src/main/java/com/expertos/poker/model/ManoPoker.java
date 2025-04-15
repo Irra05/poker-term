@@ -1,4 +1,4 @@
-package com.expertos.poker.imports;
+package com.expertos.poker.model;
 
 import java.util.List;
 import java.util.Objects;

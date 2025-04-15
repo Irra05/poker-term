@@ -1,6 +1,6 @@
 package com.expertos;
 
-import com.expertos.poker.PokerGame;
+import com.expertos.poker.PokerInit;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class Main {
             System.out.println("        Bienvenido a Poker Term");
             System.out.println("========================================");
 
-            PokerGame.start();
+            PokerInit.start();
             //break;
         }
     }

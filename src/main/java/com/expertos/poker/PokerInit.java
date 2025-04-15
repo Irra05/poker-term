@@ -4,7 +4,7 @@ import com.expertos.poker.runnables.PokerServerAsync;
 
 import java.util.Scanner;
 
-public class PokerGame {
+public class PokerInit {
     private static void selectOption(String s) {
         s = s.toLowerCase();
 

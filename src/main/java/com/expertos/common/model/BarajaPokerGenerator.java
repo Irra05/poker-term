@@ -1,4 +1,4 @@
-package com.expertos.common;
+package com.expertos.common.model;
 
 import java.io.FileWriter;
 import java.io.IOException;

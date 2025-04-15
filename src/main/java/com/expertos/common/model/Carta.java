@@ -1,4 +1,4 @@
-package com.expertos.common;
+package com.expertos.common.model;
 
 import java.util.Objects;
 
@@ -124,7 +124,7 @@ public class Carta {
 
     @Override
     public String toString() {
-        return getNumRight() + ", " + getPaloRight();
+        return getNum() + ", " + getPalo();
     }
 
 }
