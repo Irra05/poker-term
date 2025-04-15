@@ -10,14 +10,16 @@ public class PokerInit {
 
         switch(s) {
             case "unirse": {
-                PokerClient.start();
+                PokerClient client = new PokerClient();
+                client.start();
                 break;
             }
             case "crear": {
                 Thread server = new Thread(new PokerServerAsync(false));
                 server.start();
 
-                PokerClient.start();
+                PokerClient client = new PokerClient("127.0.0.1");
+                client.start();
                 break;
             }
             case "host": {
