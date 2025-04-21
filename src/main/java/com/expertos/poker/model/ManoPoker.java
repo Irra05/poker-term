@@ -2,11 +2,9 @@ package com.expertos.poker.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class ManoPoker implements Comparable<ManoPoker> {
-    public static enum Jugada {
-        PAREJA, DOBLE_PAREJA, TRIO, ESCALERA, FULL, POKER, ESCALERA_COLOR, REPOKER
-    }
 
     private List<CartaPoker> mesa;
     private List<CartaPoker> mano;
@@ -24,7 +22,7 @@ public class ManoPoker implements Comparable<ManoPoker> {
         return mano;
     }
 
-    public Jugada getMejorJugada() {
+    public Combinacion5 getMejorCombinacion() {
         //TODO
         return null;
     }
