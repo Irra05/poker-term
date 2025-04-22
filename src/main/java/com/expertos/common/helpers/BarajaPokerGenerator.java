@@ -1,4 +1,6 @@
-package com.expertos.common.model;
+package com.expertos.common.helpers;
+
+import com.expertos.common.model.Card;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,7 +8,7 @@ import java.io.IOException;
 public class BarajaPokerGenerator {
     public static void main(String[] args) {
         FileWriter file;
-        Carta.Palo p;
+        Card.Color p;
 
         try {
             file = new FileWriter("src/main/resources/baraja-poker.csv");
@@ -14,19 +16,19 @@ public class BarajaPokerGenerator {
             for(int i = 0; i < 4; i++) {
                 switch(i) {
                     case 0: {
-                        p = Carta.Palo.PICAS;
+                        p = Card.Color.PICAS;
                         break;
                     }
                     case 1: {
-                        p = Carta.Palo.TREBOLES;
+                        p = Card.Color.TREBOLES;
                         break;
                     }
                     case 2: {
-                        p = Carta.Palo.DIAMANTES;
+                        p = Card.Color.DIAMANTES;
                         break;
                     }
                     case 3: {
-                        p = Carta.Palo.CORAZONES;
+                        p = Card.Color.CORAZONES;
                         break;
                     }
                     default: {
@@ -38,9 +40,6 @@ public class BarajaPokerGenerator {
                     file.write(num.toString() + ';' + p.toString() + '\n');
                 }
             }
-
-            file.write("0;COMODIN\n");
-            file.write("0;COMODIN\n");
 
             file.close();
         } catch (IOException e) {

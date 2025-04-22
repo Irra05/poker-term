@@ -2,26 +2,22 @@ package com.expertos.common.model;
 
 import java.util.Objects;
 
-public class Carta {
-
-    public static enum Palo {
-        PICAS, TREBOLES, DIAMANTES, CORAZONES, COMODIN
-    }
+public class Card {
 
     public static enum Color {
-        NEGRO, ROJO, COMODIN
+        PICAS, TREBOLES, DIAMANTES, CORAZONES
     }
 
     protected Integer num;
-    protected Palo palo;
+    protected Color color;
 
-    public Carta(Integer num, Palo palo) {
+    public Card(Integer num, Color color) {
         if(num < 1 || num > 13) {
             throw new IllegalArgumentException("Card number must be between 1 and 13");
         }
 
         this.num = num;
-        this.palo = palo;
+        this.color = color;
     }
 
     public Integer getNum() {
@@ -55,14 +51,14 @@ public class Carta {
         return res;
     }
 
-    public Palo getPalo() {
-        return palo;
+    public Color getColor() {
+        return color;
     }
 
-    public Character getPaloRight() {
+    public Character getColorRight() {
         Character res;
 
-        switch(palo) {
+        switch(color) {
             case PICAS: {
                 res = '♠';
                 break;
@@ -79,32 +75,8 @@ public class Carta {
                 res = '♥';
                 break;
             }
-            case COMODIN: {
-                res = 'C';
-                break;
-            }
             default:
-                throw new IllegalStateException("Unexpected value: " + palo);
-        }
-
-        return res;
-    }
-
-    public Color getColor() {
-        Color res = null;
-
-        switch(getPalo()) {
-            case PICAS: {}
-            case TREBOLES: {
-                res = Color.NEGRO;
-                break;
-            }
-            case DIAMANTES: {}
-            case CORAZONES: {
-                res = Color.ROJO;
-                break;
-            }
-            default: res = Color.COMODIN;
+                throw new IllegalStateException("Unexpected value: " + color);
         }
 
         return res;
@@ -113,18 +85,18 @@ public class Carta {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Carta that = (Carta) o;
-        return Objects.equals(num, that.num) && palo == that.palo;
+        Card that = (Card) o;
+        return Objects.equals(num, that.num) && color == that.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(num, palo);
+        return Objects.hash(num, color);
     }
 
     @Override
     public String toString() {
-        return getNum() + ", " + getPalo();
+        return getNum() + ", " + getColor();
     }
 
 }
