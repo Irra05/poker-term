@@ -1,6 +1,6 @@
 package com.expertos.poker.model;
 
-import com.expertos.poker.helpers.Combination;
+import com.expertos.poker.helpers.Play;
 
 import java.util.*;
 
@@ -29,26 +29,8 @@ public class PokerHand {
         return toReturn;
     }
 
-    // Se utiliza para encontrar parejas, tríos y pokers (ni doble pareja ni full)
-    private SortedSet<PokerCard> findBiggestSetEqualNumber() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>();
-
-        for(PokerCard card : getAllCards()) {
-            SortedSet<PokerCard> candidate = new TreeSet<>();
-            for(PokerCard otherCard : getAllCards()) {
-                if(card.getNum().equals(otherCard.getNum()))
-                    candidate.add(otherCard);
-            }
-
-            if(candidate.size() > toReturn.size())
-                toReturn = new TreeSet<>(candidate);
-        }
-
-        return toReturn;
-    }
-
     // El comparator se me ha complicado
-    private static SortedSet<SortedSet<PokerCard>> createSortedSetSetsEqualNumber() {
+    private static Comparator<SortedSet<PokerCard>> createComparatorSetOfEqualNumbers() {
         Comparator<SortedSet<PokerCard>> cmp = new Comparator<SortedSet<PokerCard>>() {
             @Override
             public int compare(SortedSet<PokerCard> o1, SortedSet<PokerCard> o2) {
@@ -64,13 +46,13 @@ public class PokerHand {
             }
         };
 
-        SortedSet<SortedSet<PokerCard>> toReturn = new TreeSet<>(cmp);
-        return toReturn;
+        return cmp;
     }
 
-    // Se utiliza para encontrar dobles parejas y fulls
+    // Se utiliza para encontrar parejas, dobles parejas, tríos, fulls y pokers
     private SortedSet<SortedSet<PokerCard>> findAllSetsEqualNumber() {
-        SortedSet<SortedSet<PokerCard>> toReturn = createSortedSetSetsEqualNumber();
+        SortedSet<SortedSet<PokerCard>> toReturn =
+                new TreeSet<>(createComparatorSetOfEqualNumbers());
 
         SortedSet<PokerCard> allCards = getAllCards();
 
@@ -117,8 +99,8 @@ public class PokerHand {
 
     // Este método utiliza los métodos privados "find" anteriores
     // para encontrar la mejor combinación de 5 o 2 cartas.
-    public Combination getBestCombination() {
-        Combination toReturn = null;
+    public Play getBestCombination() {
+        Play toReturn = null;
         //TODO
 
         return toReturn;

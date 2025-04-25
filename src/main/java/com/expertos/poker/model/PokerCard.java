@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PokerCard extends Card implements Comparable<PokerCard> {
-    public PokerCard(Integer num, Color color) {
-        super(num, color);
+    public PokerCard(Integer num, Suit suit) {
+        super(num, suit);
     }
 
     public void setNum(Integer num) {
         super.num = num;
     }
 
-    public void setColor(Color color) {
-        super.color = color;
+    public void setColor(Suit suit) {
+        super.suit = suit;
     }
 
     public Integer getValue() {
@@ -30,7 +30,7 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
 
     @Override
     public String toString() {
-        return super.getNumRight() + " " + super.getColorRight();
+        return super.getNumRight() + " " + super.getSuitRight();
     }
 
     public static List<PokerCard> readFromFile(String fileName) {
@@ -42,7 +42,7 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
             for(String linea : lines) {
                 String[] splits = linea.split(";");
 
-                PokerCard carta = new PokerCard(Integer.valueOf(splits[0]), Color.valueOf(splits[1]));
+                PokerCard carta = new PokerCard(Integer.valueOf(splits[0]), Suit.valueOf(splits[1]));
                 res.add(carta);
             }
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
         Integer toReturn = this.getValue().compareTo(other.getValue());
 
         if(toReturn.equals(0))
-            toReturn = this.getColor().compareTo(other.getColor());
+            toReturn = this.getSuit().compareTo(other.getSuit());
 
         return toReturn;
     }

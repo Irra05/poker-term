@@ -8,7 +8,7 @@ import java.io.IOException;
 public class BarajaPokerGenerator {
     public static void main(String[] args) {
         FileWriter file;
-        Card.Color p;
+        Card.Suit p;
 
         try {
             file = new FileWriter("src/main/resources/baraja-poker.csv");
@@ -16,19 +16,19 @@ public class BarajaPokerGenerator {
             for(int i = 0; i < 4; i++) {
                 switch(i) {
                     case 0: {
-                        p = Card.Color.PICAS;
+                        p = Card.Suit.PICAS;
                         break;
                     }
                     case 1: {
-                        p = Card.Color.TREBOLES;
+                        p = Card.Suit.TREBOLES;
                         break;
                     }
                     case 2: {
-                        p = Card.Color.DIAMANTES;
+                        p = Card.Suit.DIAMANTES;
                         break;
                     }
                     case 3: {
-                        p = Card.Color.CORAZONES;
+                        p = Card.Suit.CORAZONES;
                         break;
                     }
                     default: {

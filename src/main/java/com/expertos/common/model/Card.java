@@ -4,20 +4,21 @@ import java.util.Objects;
 
 public class Card {
 
-    public static enum Color {
+    public static enum Suit {
+        // TODO Ponerlo en inglés
         PICAS, TREBOLES, DIAMANTES, CORAZONES
     }
 
     protected Integer num;
-    protected Color color;
+    protected Suit suit;
 
-    public Card(Integer num, Color color) {
+    public Card(Integer num, Suit suit) {
         if(num < 1 || num > 13) {
             throw new IllegalArgumentException("Card number must be between 1 and 13");
         }
 
         this.num = num;
-        this.color = color;
+        this.suit = suit;
     }
 
     public Integer getNum() {
@@ -51,14 +52,14 @@ public class Card {
         return res;
     }
 
-    public Color getColor() {
-        return color;
+    public Suit getSuit() {
+        return suit;
     }
 
-    public Character getColorRight() {
+    public Character getSuitRight() {
         Character res;
 
-        switch(color) {
+        switch(suit) {
             case PICAS: {
                 res = '♠';
                 break;
@@ -76,7 +77,7 @@ public class Card {
                 break;
             }
             default:
-                throw new IllegalStateException("Unexpected value: " + color);
+                throw new IllegalStateException("Unexpected value: " + suit);
         }
 
         return res;
@@ -86,17 +87,17 @@ public class Card {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Card that = (Card) o;
-        return Objects.equals(num, that.num) && color == that.color;
+        return Objects.equals(num, that.num) && suit == that.suit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(num, color);
+        return Objects.hash(num, suit);
     }
 
     @Override
     public String toString() {
-        return getNum() + ", " + getColor();
+        return getNum() + ", " + getSuit();
     }
 
 }
