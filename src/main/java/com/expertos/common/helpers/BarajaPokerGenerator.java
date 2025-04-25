@@ -16,19 +16,19 @@ public class BarajaPokerGenerator {
             for(int i = 0; i < 4; i++) {
                 switch(i) {
                     case 0: {
-                        p = Card.Suit.PICAS;
+                        p = Card.Suit.SPADES;
                         break;
                     }
                     case 1: {
-                        p = Card.Suit.TREBOLES;
+                        p = Card.Suit.CLUBS;
                         break;
                     }
                     case 2: {
-                        p = Card.Suit.DIAMANTES;
+                        p = Card.Suit.DIAMONDS;
                         break;
                     }
                     case 3: {
-                        p = Card.Suit.CORAZONES;
+                        p = Card.Suit.HEARTS;
                         break;
                     }
                     default: {

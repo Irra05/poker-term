@@ -52,9 +52,11 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
         return res;
     }
 
+    // Ordena por valor de la carta de mayor a menor
+    // para no tener que hacer SortedSets con comparadores personalizados.
     @Override
     public int compareTo(PokerCard other) {
-        Integer toReturn = this.getValue().compareTo(other.getValue());
+        Integer toReturn = other.getValue().compareTo(this.getValue());
 
         if(toReturn.equals(0))
             toReturn = this.getSuit().compareTo(other.getSuit());

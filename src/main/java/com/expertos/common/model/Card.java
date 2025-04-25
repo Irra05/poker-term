@@ -5,8 +5,7 @@ import java.util.Objects;
 public class Card {
 
     public static enum Suit {
-        // TODO Ponerlo en inglés
-        PICAS, TREBOLES, DIAMANTES, CORAZONES
+        SPADES, CLUBS, DIAMONDS, HEARTS
     }
 
     protected Integer num;
@@ -60,19 +59,19 @@ public class Card {
         Character res;
 
         switch(suit) {
-            case PICAS: {
+            case SPADES: {
                 res = '♠';
                 break;
             }
-            case TREBOLES: {
+            case CLUBS: {
                 res = '♣';
                 break;
             }
-            case DIAMANTES: {
+            case DIAMONDS: {
                 res = '♦';
                 break;
             }
-            case CORAZONES: {
+            case HEARTS: {
                 res = '♥';
                 break;
             }

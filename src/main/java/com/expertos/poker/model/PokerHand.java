@@ -1,8 +1,12 @@
 package com.expertos.poker.model;
 
+import com.expertos.common.model.Card;
 import com.expertos.poker.helpers.Play;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.mapping;
 
 public class PokerHand {
 
@@ -30,8 +34,9 @@ public class PokerHand {
     }
 
     // El comparator se me ha complicado
-    private static Comparator<SortedSet<PokerCard>> createComparatorSetOfEqualNumbers() {
-        Comparator<SortedSet<PokerCard>> cmp = new Comparator<SortedSet<PokerCard>>() {
+    private static Comparator<SortedSet<PokerCard>> createComparatorSortedSetOfEqualNumbers() {
+
+        return new Comparator<SortedSet<PokerCard>>() {
             @Override
             public int compare(SortedSet<PokerCard> o1, SortedSet<PokerCard> o2) {
                 Integer toReturn = o2.size() - o1.size();
@@ -39,20 +44,18 @@ public class PokerHand {
                 if(!toReturn.equals(0))
                     return toReturn;
                 else {
-                    toReturn = o2.getFirst().getValue().compareTo(o1.getFirst().getValue());
+                    toReturn = o1.getFirst().getValue().compareTo(o2.getFirst().getValue());
                 }
 
                 return toReturn;
             }
         };
-
-        return cmp;
     }
 
     // Se utiliza para encontrar parejas, dobles parejas, tríos, fulls y pokers
     private SortedSet<SortedSet<PokerCard>> findAllSetsEqualNumber() {
         SortedSet<SortedSet<PokerCard>> toReturn =
-                new TreeSet<>(createComparatorSetOfEqualNumbers());
+                new TreeSet<>(createComparatorSortedSetOfEqualNumbers());
 
         SortedSet<PokerCard> allCards = getAllCards();
 
@@ -62,12 +65,13 @@ public class PokerHand {
 
             allCards.remove(card);
 
-            for(PokerCard otherCard : allCards) {
+            for(PokerCard otherCard : allCards)
                 if(card.getNum().equals(otherCard.getNum())) {
                     cards.add(otherCard);
                     allCards.remove(otherCard);
                 }
-            }
+
+            toReturn.add(cards);
         }
 
         return toReturn;
@@ -75,15 +79,25 @@ public class PokerHand {
 
     // Encuentra colores
     private SortedSet<PokerCard> findColor() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>();
-        // TODO
+        SortedSet<PokerCard> toReturn = null;
+        // TODO terminar
+
+        Map<Card.Suit, SortedSet<PokerCard>> colors = getAllCards().stream()
+                .collect(Collectors.groupingBy(PokerCard::getSuit, Collectors.mapping())); // Como se hace?
+
+        for(Card.Suit color : colors.keySet()) {
+
+        }
 
         return toReturn;
     }
 
     // Encuentra escaleras simples
     private SortedSet<PokerCard> findStair() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>();
+        SortedSet<PokerCard> toReturn = new TreeSet<>(
+                Comparator.comparing(PokerCard::getNum)
+                        .thenComparing(PokerCard::getSuit)
+        );
         // TODO
 
         return toReturn;
@@ -91,7 +105,10 @@ public class PokerHand {
 
     // Encuentra escaleras de color
     private SortedSet<PokerCard> findColorStair() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>();
+        SortedSet<PokerCard> toReturn = new TreeSet<>(
+                Comparator.comparing(PokerCard::getNum)
+                        .thenComparing(PokerCard::getSuit)
+        );
         // TODO
 
         return toReturn;
@@ -99,7 +116,7 @@ public class PokerHand {
 
     // Este método utiliza los métodos privados "find" anteriores
     // para encontrar la mejor combinación de 5 o 2 cartas.
-    public Play getBestCombination() {
+    public Play getBestPlay() {
         Play toReturn = null;
         //TODO
 
