@@ -24,27 +24,27 @@ public class Card {
         return num;
     }
 
-    public Character getNumRight() {
-        Character res = null;
+    public String getNumRight() {
+        String res = null;
         switch(num) {
             case 1: {
-                res = 'A';
+                res = "A";
                 break;
             }
             case 11: {
-                res = 'J';
+                res = "J";
                 break;
             }
             case 12: {
-                res = 'Q';
+                res = "Q";
                 break;
             }
             case 13: {
-                res = 'K';
+                res = "K";
                 break;
             }
             default: {
-                throw new IllegalStateException("Unexpected value: " + num);
+                res = getNum().toString();
             }
         }
 

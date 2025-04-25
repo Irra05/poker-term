@@ -1,4 +1,4 @@
-package com.expertos.common.protocol;
+package com.expertos.protocol;
 
 import java.util.Optional;
 

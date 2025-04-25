@@ -52,7 +52,10 @@ public class PokerHand {
         };
     }
 
-    // Se utiliza para encontrar parejas, dobles parejas, tríos, fulls y pokers
+    // Se utiliza para encontrar parejas, dobles parejas, tríos, fulls y pokers.
+    // Devuelve un SortedSet de SortedSets de CartaPoker con igual número,
+    // ordenados por tamaño de (mayor a menor) y por valor de la carta en el juego (de mayor a menor).
+    // Si no encuentra el set devuelto contendrá varios sets de 1 elemento.
     private SortedSet<SortedSet<PokerCard>> findAllSetsEqualNumber() {
         SortedSet<SortedSet<PokerCard>> toReturn =
                 new TreeSet<>(createComparatorSortedSetOfEqualNumbers());
@@ -77,22 +80,24 @@ public class PokerHand {
         return toReturn;
     }
 
-    // Encuentra colores
+    // Encuentra colores.
+    // Si no encuentra devuelve null.
     private SortedSet<PokerCard> findColor() {
         SortedSet<PokerCard> toReturn = null;
-        // TODO terminar
 
         Map<Card.Suit, SortedSet<PokerCard>> colors = getAllCards().stream()
-                .collect(Collectors.groupingBy(PokerCard::getSuit, Collectors.mapping())); // Como se hace?
+                .collect(Collectors.groupingBy(PokerCard::getSuit, Collectors.toCollection(TreeSet::new)));
 
-        for(Card.Suit color : colors.keySet()) {
-
-        }
+        for(Map.Entry<Card.Suit, SortedSet<PokerCard>> colorEntry : colors.entrySet())
+            if(colorEntry.getValue().size() >= 5) {
+                toReturn = colorEntry.getValue();
+                break;
+            }
 
         return toReturn;
     }
 
-    // Encuentra escaleras simples
+    // Encuentra escaleras simples.
     private SortedSet<PokerCard> findStair() {
         SortedSet<PokerCard> toReturn = new TreeSet<>(
                 Comparator.comparing(PokerCard::getNum)
@@ -103,7 +108,7 @@ public class PokerHand {
         return toReturn;
     }
 
-    // Encuentra escaleras de color
+    // Encuentra escaleras de color.
     private SortedSet<PokerCard> findColorStair() {
         SortedSet<PokerCard> toReturn = new TreeSet<>(
                 Comparator.comparing(PokerCard::getNum)
@@ -114,8 +119,10 @@ public class PokerHand {
         return toReturn;
     }
 
-    // Este método utiliza los métodos privados "find" anteriores
+    // Este método utiliza los métodos privados "find" anteriores,
     // para encontrar la mejor combinación de 5 o 2 cartas.
+    // Debe ordenar las cartas del ArrayList que hay que pasarle al constructor de Play según el tipo de jugada,
+    // para que el método compareAllElementsOfPlays las compare en el orden correcto (demostración en la clase PlayTest).
     public Play getBestPlay() {
         Play toReturn = null;
         //TODO

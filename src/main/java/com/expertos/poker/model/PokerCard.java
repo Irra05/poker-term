@@ -30,7 +30,7 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
 
     @Override
     public String toString() {
-        return super.getNumRight() + " " + super.getSuitRight();
+        return "[" + super.getNumRight() + super.getSuitRight() + ']';
     }
 
     public static List<PokerCard> readFromFile(String fileName) {
