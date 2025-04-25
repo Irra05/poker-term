@@ -1,6 +1,6 @@
 package com.expertos.poker.runnables;
 
-import com.expertos.poker.PokerServer;
+import com.expertos.poker.execution.PokerServer;
 
 public class PokerServerAsync implements Runnable{
 

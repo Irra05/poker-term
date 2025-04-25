@@ -6,7 +6,6 @@ import com.expertos.poker.helpers.Play;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.mapping;
 
 public class PokerHand {
 

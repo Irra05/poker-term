@@ -1,4 +1,4 @@
-package com.expertos.poker;
+package com.expertos.poker.execution;
 
 import com.expertos.poker.runnables.PokerServerAsync;
 

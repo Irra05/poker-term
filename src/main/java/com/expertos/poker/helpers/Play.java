@@ -2,9 +2,7 @@ package com.expertos.poker.helpers;
 
 import com.expertos.poker.model.PokerCard;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
 
 public record Play(List<PokerCard> cards, Type type) implements Comparable<Play> {
 
