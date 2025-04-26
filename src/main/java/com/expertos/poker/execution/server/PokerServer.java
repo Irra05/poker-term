@@ -1,4 +1,4 @@
-package com.expertos.poker.execution;
+package com.expertos.poker.execution.server;
 
 public class PokerServer {
     private Boolean enablePrints;

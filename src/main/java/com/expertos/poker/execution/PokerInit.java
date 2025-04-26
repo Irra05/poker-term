@@ -1,5 +1,7 @@
 package com.expertos.poker.execution;
 
+import com.expertos.poker.execution.client.PokerClient;
+import com.expertos.poker.execution.server.PokerServer;
 import com.expertos.poker.runnables.PokerServerAsync;
 
 import java.util.Scanner;

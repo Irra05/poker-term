@@ -1,4 +1,4 @@
-package com.expertos.poker.execution;
+package com.expertos.poker.execution.client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

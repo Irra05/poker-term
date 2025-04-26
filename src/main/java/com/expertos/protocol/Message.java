@@ -1,10 +1,8 @@
 package com.expertos.protocol;
 
-import java.util.Optional;
-
-public class Protocol {
+public class Message {
     public static enum MessageType {
-        CONNECT, DISCONNECT, START, FINISH, ACK, NACK, PING, MESSAGE, REQUEST, RESPONSE
+        MESSAGE, REQUEST, RESPONSE, PING, ACK, NACK
     }
 
     private MessageType type;
@@ -12,7 +10,7 @@ public class Protocol {
     private Long ackNum;
     private String content;
 
-    public Protocol(MessageType type, Long messageNum, Long ackNum, String content) {
+    public Message(MessageType type, Long messageNum, Long ackNum, String content) {
         this.type = type;
         this.messageNum = messageNum;
         this.ackNum = ackNum;
