@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PokerCard extends Card implements Comparable<PokerCard> {
@@ -63,4 +64,7 @@ public class PokerCard extends Card implements Comparable<PokerCard> {
 
         return toReturn;
     }
+
+    public static Comparator<PokerCard> compareByNumber = Comparator.comparing(PokerCard::getNum)
+            .thenComparing(PokerCard::getSuit);
 }

@@ -2,6 +2,8 @@ package com.expertos.poker.helpers;
 
 import com.expertos.poker.model.PokerCard;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public record Play(List<PokerCard> cards, Type type) implements Comparable<Play> {
@@ -15,16 +17,26 @@ public record Play(List<PokerCard> cards, Type type) implements Comparable<Play>
             throw new IllegalArgumentException("You can only play with 2 (preflop) or 5 cards");
     }
 
-    private static int compareAllElementsOfPlays(List<PokerCard> first, List<PokerCard> second) {
-        Integer toReturn = first.size() - second.size();
+    private static int compareAllElementsOfPlays(Play first, Play second) {
+        if(first.cards().size() != second.cards().size())
+            throw new IllegalArgumentException("Compared plays must have the same amount of cards");
 
-        if(toReturn.equals(0)) {
-            for(int i = 0; i < first.size(); i++) {
-                toReturn = second.get(i).compareTo(first.get(i));
+        Integer toReturn = null;
 
-                if(!toReturn.equals(0))
-                    break;
-            }
+        List<PokerCard> copy1 = new ArrayList<>(first.cards()), copy2 = new ArrayList<>(second.cards());
+
+        if(first.type().equals(second.type()) &&
+                (first.type().equals(Type.COLOR) || first.type().equals(Type.STAIR) || first.type().equals(Type.COLOR_STAIR))){
+
+            Collections.sort(copy1);
+            Collections.sort(copy2);
+        }
+
+        for(int i = 0; i < copy1.size(); i++) {
+            toReturn = copy2.get(i).compareTo(copy1.get(i));
+
+            if(!toReturn.equals(0))
+                break;
         }
 
         return toReturn;
@@ -35,7 +47,7 @@ public record Play(List<PokerCard> cards, Type type) implements Comparable<Play>
         Integer toReturn = this.type().compareTo(other.type());
 
         if(toReturn.equals(0)) {
-            toReturn = compareAllElementsOfPlays(this.cards(), other.cards());
+            toReturn = compareAllElementsOfPlays(this, other);
         }
 
         return toReturn;

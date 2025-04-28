@@ -80,42 +80,95 @@ public class PokerHand {
     }
 
     // Encuentra colores.
-    // Si no encuentra devuelve null.
+    // Si no encuentra devuelve un TreeSet vacío.
     private SortedSet<PokerCard> findColor() {
-        SortedSet<PokerCard> toReturn = null;
+        SortedSet<PokerCard> color = new TreeSet<>();
 
         Map<Card.Suit, SortedSet<PokerCard>> colors = getAllCards().stream()
                 .collect(Collectors.groupingBy(PokerCard::getSuit, Collectors.toCollection(TreeSet::new)));
 
         for(Map.Entry<Card.Suit, SortedSet<PokerCard>> colorEntry : colors.entrySet())
             if(colorEntry.getValue().size() >= 5) {
-                toReturn = colorEntry.getValue();
+                color.addAll(colorEntry.getValue());
                 break;
             }
 
-        return toReturn;
+        return color;
     }
 
     // Encuentra escaleras simples.
+    // Si no encuentra devuelve un TreeSet vacío
     private SortedSet<PokerCard> findStair() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>(
-                Comparator.comparing(PokerCard::getNum)
-                        .thenComparing(PokerCard::getSuit)
-        );
-        // TODO
+        SortedSet<PokerCard> stair = new TreeSet<>(PokerCard.compareByNumber);
 
-        return toReturn;
+        SortedSet<PokerCard> allCards = new TreeSet<>(PokerCard.compareByNumber);
+        allCards.addAll(getAllCards());
+
+        Integer skippedCards = 0;
+
+        for(PokerCard card : allCards) {
+            if(stair.isEmpty() ||
+                    card.getNum().equals(stair.getLast().getNum() + 1))
+                stair.add(card);
+            else if(card.getNum().equals(stair.getLast().getNum()))
+                skippedCards++;
+            else {
+                skippedCards += stair.size();
+                stair.clear();
+                stair.add(card);
+            }
+
+            if(stair.size() == 5)
+                break;
+
+            if(skippedCards > 2){
+                stair.clear();
+                break;
+            }
+        }
+
+        return stair;
     }
 
     // Encuentra escaleras de color.
+    // Si no encuentra devuelve un TreeSet vacío
     private SortedSet<PokerCard> findColorStair() {
-        SortedSet<PokerCard> toReturn = new TreeSet<>(
-                Comparator.comparing(PokerCard::getNum)
-                        .thenComparing(PokerCard::getSuit)
-        );
-        // TODO
+        SortedSet<PokerCard> colorStair = new TreeSet<>(PokerCard.compareByNumber);
 
-        return toReturn;
+        SortedSet<PokerCard> allCards = new TreeSet<>(PokerCard.compareByNumber);
+        allCards.addAll(getAllCards());
+
+        Integer skippedCards = 0;
+
+        for(PokerCard card : allCards) {
+            if(colorStair.isEmpty() ||
+                    (card.getSuit().equals(colorStair.getLast().getSuit()) &&
+                            card.getNum().equals(colorStair.getLast().getNum() + 1)))
+
+                colorStair.add(card);
+
+            else if(card.getNum().equals(colorStair.getLast().getNum()) ||
+                    (!card.getSuit().equals(colorStair.getLast().getSuit()) &&
+                            card.getNum().equals(colorStair.getLast().getNum() + 1)))
+
+                skippedCards++;
+
+            else {
+                skippedCards += colorStair.size();
+                colorStair.clear();
+                colorStair.add(card);
+            }
+
+            if(colorStair.size() == 5)
+                break;
+
+            if(skippedCards > 2) {
+                colorStair.clear();
+                break;
+            }
+        }
+
+        return colorStair;
     }
 
     // Este método utiliza los métodos privados "find" anteriores,
@@ -123,10 +176,44 @@ public class PokerHand {
     // Debe ordenar las cartas del ArrayList que hay que pasarle al constructor de Play según el tipo de jugada,
     // para que el método compareAllElementsOfPlays las compare en el orden correcto (demostración en la clase PlayTest).
     public Play getBestPlay() {
-        Play toReturn = null;
-        //TODO
+        Play bestPlay = null;
+        //TODO terminar (faltan doble pareja, pareja y single)
 
-        return toReturn;
+        SortedSet<PokerCard> colorStair = findColorStair();
+        SortedSet<PokerCard> color = findColor();
+        SortedSet<PokerCard> stair = findStair();
+
+        if(!colorStair.isEmpty())
+            bestPlay = new Play(new ArrayList<>(colorStair), Play.Type.COLOR_STAIR);
+        else if (!color.isEmpty())
+            bestPlay = new Play(new ArrayList<>(color), Play.Type.COLOR);
+        else if (!stair.isEmpty())
+            bestPlay = new Play(new ArrayList<>(stair), Play.Type.STAIR);
+        else {
+            List<SortedSet<PokerCard>> equalValueSets = new ArrayList<>(findAllSetsEqualNumber());
+
+            if(equalValueSets.getFirst().size() == 4) {
+                List<PokerCard> bestPlayCards = new ArrayList<>(equalValueSets.getFirst());
+                bestPlayCards.add(equalValueSets.get(2).getFirst());
+
+                bestPlay = new Play(bestPlayCards, Play.Type.POKER);
+            } else if (equalValueSets.getFirst().size() == 3) {
+                if(equalValueSets.get(2).size() >= 2) {
+                    List<PokerCard> bestPlayCards = new ArrayList<>(equalValueSets.getFirst());
+                    bestPlayCards.addAll(equalValueSets.get(2).stream().limit(2).toList());
+
+                    bestPlay = new Play(bestPlayCards, Play.Type.FULL_HOUSE);
+                } else {
+                    List<PokerCard> bestPlayCards = new ArrayList<>(equalValueSets.getFirst());
+                    bestPlayCards.add(equalValueSets.get(2).getFirst());
+                    bestPlayCards.add(equalValueSets.get(3).getFirst());
+
+                    bestPlay = new Play(bestPlayCards, Play.Type.TRIO);
+                }
+            }
+        }
+
+        return bestPlay;
     }
 
     @Override
